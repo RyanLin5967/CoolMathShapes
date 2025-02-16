@@ -11,9 +11,9 @@ public class FractalAnimator extends JPanel {
     private BufferedImage currentImage; // Current fractal image being displayed
     private BufferedImage nextImage;    // Next fractal image being computed
     private double cRe = -0.599, cIm = 0.99; // These values are cool
-    private int maxIteration = 60; // Reduced max iterations for performance
-    private final JTextField iterationInputField; // Input field for iterations
-    private final JButton setIterationsButton; // Button to set iterations
+    private int maxIteration = 100; // Reduced max iterations for performance
+    //private final JTextField iterationInputField; // Input field for iterations
+    //private final JButton setIterationsButton; // Button to set iterations
 
     // Variables for smooth oscillation
     private double cReSpeed = 0.005; // Speed of change for cRe
@@ -25,14 +25,15 @@ public class FractalAnimator extends JPanel {
     private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     // Fractal dimensions (fixed to screen size)
-    private int fractalWidth = 900; // Default width
-    private int fractalHeight = 900; // Default height
+    private int fractalWidth = 1000; // Default width
+    private int fractalHeight = 1000; // Default height
 
     public FractalAnimator() {
         // Set up the input field for the number of iterations
-        iterationInputField = new JTextField(String.valueOf(maxIteration), 10);
+        //iterationInputField = new JTextField(String.valueOf(maxIteration), 10);
 
         // Set up the button to update the number of iterations
+        /* 
         setIterationsButton = new JButton("Set Iterations");
         setIterationsButton.addActionListener(new ActionListener() {
             @Override
@@ -49,7 +50,7 @@ public class FractalAnimator extends JPanel {
                 repaint(); // Repaint the fractal when the iteration count changes
             }
         });
-
+        */
         // Initialize the fractal images
         currentImage = new BufferedImage(fractalWidth, fractalHeight, BufferedImage.TYPE_INT_ARGB);
         nextImage = new BufferedImage(fractalWidth, fractalHeight, BufferedImage.TYPE_INT_ARGB);
@@ -150,10 +151,10 @@ public class FractalAnimator extends JPanel {
         sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
 
         // Label for iteration input field
-        JLabel iterationLabel = new JLabel("Max Iterations: ");
-        sidebarPanel.add(iterationLabel);
-        sidebarPanel.add(panel.iterationInputField);
-        sidebarPanel.add(panel.setIterationsButton); // Add the button to set iterations
+        //JLabel iterationLabel = new JLabel("Max Iterations: ");
+        //sidebarPanel.add(iterationLabel);
+        //sidebarPanel.add(panel.iterationInputField);
+        //sidebarPanel.add(panel.setIterationsButton); // Add the button to set iterations
 
         // Set up the main layout: a border layout with the sidebar on the left
         frame.setLayout(new BorderLayout());

@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,7 +9,7 @@ public class FractalAnimator extends JPanel {
     private BufferedImage currentImage; // Current fractal image being displayed
     private BufferedImage nextImage;    // Next fractal image being computed
     private double cRe, cIm;           // Constant c = 0.7885 * e^(i*a)
-    private int maxIteration = 50;    // Reduced max iterations for performance
+    private int maxIteration = 50;    // Set to 50 for best performance
 
     // Variables for animation
     private double angle = 0;          // Angle a in radians
@@ -20,36 +18,31 @@ public class FractalAnimator extends JPanel {
     // Thread pool for parallel fractal generation
     private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-    // Fractal dimensions (fixed to screen size)
     private int fractalWidth = 1000;   // Default width
     private int fractalHeight = 1000;  // Default height
 
     public FractalAnimator() {
-        // Initialize the fractal images
         currentImage = new BufferedImage(fractalWidth, fractalHeight, BufferedImage.TYPE_INT_ARGB);
         nextImage = new BufferedImage(fractalWidth, fractalHeight, BufferedImage.TYPE_INT_ARGB);
 
-        // Timer to animate the fractal continuously (30 FPS)
-        Timer timer = new Timer(30, e -> {  // ~30 FPS
+        // Timer to animate the fractal continuously 
+        Timer timer = new Timer(30, e -> {  
             updateFractal();
             repaint();
         });
         timer.start();
     }
 
-    // Update the fractal by changing the angle a
     private void updateFractal() {
-        // Update the angle a
         angle += 0.01; // Increment the angle
         if (angle > 2 * Math.PI) {
-            angle -= 2 * Math.PI; // Wrap around after 2π
+            angle -= 2 * Math.PI; // Switch around after 2π
         }
 
-        // Calculate c = 0.7885 * e^(i*a)
         cRe = radius * Math.cos(angle); // Real part of c
         cIm = radius * Math.sin(angle); // Imaginary part of c
 
-        // Generate the next fractal in parallel
+        // Generate the next fractal
         generateFractalParallel();
     }
 
@@ -89,12 +82,11 @@ public class FractalAnimator extends JPanel {
                     iteration++;
                 }
 
-                // Apply color based on the number of iterations
                 int color = iteration | (iteration << 8); // Simple coloring
                 if (iteration < maxIteration) {
                     image.setRGB(x, y, color);
                 } else {
-                    image.setRGB(x, y, Color.BLACK.getRGB()); // Points that don't escape
+                    image.setRGB(x, y, Color.BLACK.getRGB()); 
                 }
             }
         }
@@ -103,8 +95,7 @@ public class FractalAnimator extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        // Check if currentImage is initialized and not null
+        // Debugging
         if (currentImage != null) {
             // Scale the fractal to fit the panel
             g.drawImage(currentImage, 0, 0, getWidth(), getHeight(), null);
@@ -114,7 +105,7 @@ public class FractalAnimator extends JPanel {
     }
 
     public static void main(String[] args) {
-        // Set up the JFrame to cover the entire screen
+        // Set up the JFrame 
         JFrame frame = new JFrame("Julia Set Animator");
         FractalAnimator panel = new FractalAnimator();
 
@@ -126,7 +117,7 @@ public class FractalAnimator extends JPanel {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(screenSize.width, screenSize.height);
         frame.setUndecorated(true);
-        frame.add(panel, BorderLayout.CENTER); // Add the fractal panel in the center
+        frame.add(panel, BorderLayout.CENTER); 
         frame.setVisible(true);
     }
 }

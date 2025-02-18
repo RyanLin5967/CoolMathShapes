@@ -9,12 +9,12 @@ public class Mandelbrot extends JPanel {
     private int screenWidth;  // Screen width
     private int screenHeight; // Screen height
     private int fractalSize;  // Size of the fractal (square)
-    private static final int MAX_ITER = 500;
+    private static final int MAX_ITER = 300;
 
     private double zoom = 1.0;
     private double offsetX = -0.5;
     private double offsetY = 0.0;
-    private static final double ZOOM_FACTOR = 1.2;
+    private static final double ZOOM_FACTOR = 1.5;
     private BufferedImage image;
     private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     private int lastMouseX, lastMouseY;
@@ -129,6 +129,7 @@ public class Mandelbrot extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         frame.setResizable(false);
+        frame.setUndecorated(true);
         frame.add(new Mandelbrot());
         frame.pack();
         frame.setLocationRelativeTo(null);
